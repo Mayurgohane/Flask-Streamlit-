@@ -1,12 +1,15 @@
-from flask import Flask, request
+from fastapi import FastAPI, Query
+from typing import List
+import uvicorn
 
-app = Flask(__name__)
+app = FastAPI()
 
-@app.route('/greet')
-def greet():
-    return 'Hiii Mayur'
-
-
-if __name__ == '__main__':
-    app.run()
-
+@app.get("/")
+def average(num: List[int] = Query(...)):  
+    if len(num) == 0:
+        return {"error": "List is empty"}
+    
+    avg = sum(num) / len(num)
+    summ = sum(num)
+    
+    return {"average": avg, "sum": summ}
